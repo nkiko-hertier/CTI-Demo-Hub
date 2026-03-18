@@ -1,0 +1,19 @@
+packages:
+  "recharts": "For rendering data-dense cyber intelligence charts (stealers, passwords)"
+  "framer-motion": "For premium staggered entry animations and page transitions"
+  "clsx": "For conditional tailwind class merging"
+  "tailwind-merge": "For robust tailwind class merging in UI components"
+  "lucide-react": "For sleek, modern iconography"
+  "use-debounce": "For handling live search input rate limiting"
+
+images:
+  - path: "artifacts/cti-demo/public/images/hero-bg.png"
+    description: "Dark, premium cybersecurity abstract background with glowing cyan and deep purple data nodes, depth of field, subtle grid lines, high-tech hacker aesthetic"
+    aspect_ratio: "16:9"
+  - path: "artifacts/cti-demo/public/images/search-bg.png"
+    description: "Very dark minimal abstract circuit board pattern, low opacity, subtle neon blue highlights on deep black background, technical analytic vibe"
+    aspect_ratio: "16:9"
+
+notes:
+  - Assumes @workspace/api-client-react is available for hook imports
+  - Assumes standard TanStack Query setup is provided in App.tsx

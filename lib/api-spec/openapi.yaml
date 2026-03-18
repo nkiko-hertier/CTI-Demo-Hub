@@ -1,0 +1,360 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: CTI Demo API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: cti
+    description: Cyber Threat Intelligence operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /cti/search/suggestions:
+    get:
+      operationId: getSearchSuggestions
+      tags: [cti]
+      summary: Get company search suggestions
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of company suggestions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CompanySuggestion"
+  /cti/domain/{domain}/counts:
+    get:
+      operationId: getDomainCounts
+      tags: [cti]
+      summary: Get domain compromise counts
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Domain counts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainCounts"
+  /cti/domain/{domain}/urls:
+    get:
+      operationId: getDomainUrls
+      tags: [cti]
+      summary: Get compromised URLs for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Domain URLs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainUrls"
+  /cti/domain/{domain}/applications:
+    get:
+      operationId: getDomainApplications
+      tags: [cti]
+      summary: Get detected applications for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Domain applications
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainApplications"
+  /cti/domain/{domain}/passwords:
+    get:
+      operationId: getDomainPasswords
+      tags: [cti]
+      summary: Get password strength analysis for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Domain passwords
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainPasswords"
+  /cti/domain/{domain}/stealer-families:
+    get:
+      operationId: getDomainStealerFamilies
+      tags: [cti]
+      summary: Get stealer malware families for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Stealer families
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StealerFamilies"
+  /cti/domain/{domain}/antiviruses:
+    get:
+      operationId: getDomainAntiviruses
+      tags: [cti]
+      summary: Get antivirus coverage for a domain
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Antivirus data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Antiviruses"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    CompanySuggestion:
+      type: object
+      properties:
+        name:
+          type: string
+        domain:
+          type: string
+        logo:
+          type: string
+          nullable: true
+      required:
+        - name
+        - domain
+    DomainCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+        employees:
+          type: integer
+        users:
+          type: integer
+        third_parties:
+          type: integer
+        last_employee_compromised:
+          type: string
+          nullable: true
+        last_user_compromised:
+          type: string
+          nullable: true
+      required:
+        - total
+        - employees
+        - users
+        - third_parties
+    UrlEntry:
+      type: object
+      properties:
+        url:
+          type: string
+        type:
+          type: string
+        occurrence:
+          type: integer
+      required:
+        - url
+        - type
+        - occurrence
+    DomainUrls:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            employees_urls:
+              type: array
+              items:
+                $ref: "#/components/schemas/UrlEntry"
+            clients_urls:
+              type: array
+              items:
+                $ref: "#/components/schemas/UrlEntry"
+            all_urls:
+              type: array
+              items:
+                $ref: "#/components/schemas/UrlEntry"
+        stats:
+          type: object
+          properties:
+            totalEmployees:
+              type: integer
+            totalUsers:
+              type: integer
+        totalUrls:
+          type: integer
+      required:
+        - data
+        - stats
+        - totalUrls
+    AppDetail:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        ai_scenarios:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - description
+    DomainApplications:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              keyword:
+                type: string
+        appDetails:
+          type: array
+          items:
+            $ref: "#/components/schemas/AppDetail"
+      required:
+        - applications
+        - appDetails
+    PasswordStrength:
+      type: object
+      properties:
+        totalPass:
+          type: integer
+        too_weak:
+          type: object
+          properties:
+            qty:
+              type: integer
+            perc:
+              type: number
+        weak:
+          type: object
+          properties:
+            qty:
+              type: integer
+            perc:
+              type: number
+        medium:
+          type: object
+          properties:
+            qty:
+              type: integer
+            perc:
+              type: number
+        strong:
+          type: object
+          properties:
+            qty:
+              type: integer
+            perc:
+              type: number
+      required:
+        - totalPass
+    DomainPasswords:
+      type: object
+      properties:
+        employeePasswords:
+          $ref: "#/components/schemas/PasswordStrength"
+        userPasswords:
+          $ref: "#/components/schemas/PasswordStrength"
+      required:
+        - employeePasswords
+        - userPasswords
+    StealerFamilies:
+      type: object
+      properties:
+        stealerFamilies:
+          type: object
+          additionalProperties:
+            oneOf:
+              - type: integer
+              - type: string
+      required:
+        - stealerFamilies
+    AntivirusEntry:
+      type: object
+      properties:
+        count:
+          type: integer
+        name:
+          type: string
+      required:
+        - count
+        - name
+    Antiviruses:
+      type: object
+      properties:
+        antiviruses:
+          type: object
+          properties:
+            total:
+              type: integer
+            found:
+              type: number
+            not_found:
+              type: number
+            free:
+              type: number
+            list:
+              type: array
+              items:
+                $ref: "#/components/schemas/AntivirusEntry"
+      required:
+        - antiviruses

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "CTI Demo"
+version = "1.0.0"
+id = "artifacts/cti-demo"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 23739
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/cti-demo run dev"
+
+[services.env]
+PORT = "23739"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/cti-demo", "run", "build"]
+publicDir = "artifacts/cti-demo/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
