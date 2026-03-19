@@ -64,7 +64,7 @@ export default defineConfig({
     allowedHosts: true,
     proxy: {
       '/api': {
-        target: 'https://vigilant-lamp-9v56wppv7553pw75-8080.app.github.dev', // your backend
+        target: 'http://207.180.198.163:8080', // your backend
         changeOrigin: true,
         secure: false,
       }
