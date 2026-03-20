@@ -57,7 +57,7 @@ export default function Search() {
             </div>
             <Input
               type="text"
-              placeholder="Enter domain (e.g. hudsonrock.com)"
+              placeholder="Enter domain (e.g. example.com)"
               className="w-full pl-12 pr-28 h-16 text-lg bg-card border-border focus-visible:ring-primary focus-visible:border-primary rounded-xl shadow-sm font-sans"
               value={searchInput}
               onChange={(e) => {
