@@ -29,10 +29,10 @@ export function Navbar() {
           className="flex items-center gap-2 text-foreground group"
         >
           <div hidden className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 transition-all">
-            <ShieldAlert className="w-4 h-4 text-primary" />
+            <img src="https://img.itch.zone/aW1nLzI2MjIwODE4LnBuZw==/original/o5CKH4.png" width={'50'} />
           </div>
           <span className="font-display font-extrabold text-lg">
-            UMULINZI <span className="text-primary">CTI</span>
+            UMURINZI <span className="text-primary">CTI</span>
           </span>
         </Link>
 
