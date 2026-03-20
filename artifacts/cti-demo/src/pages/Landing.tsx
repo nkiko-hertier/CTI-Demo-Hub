@@ -54,7 +54,7 @@ export default function Landing() {
           {...fadeUp(0.2)}
           className="text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed"
         >
-          UMULINZI CTI continuously monitors infostealer ecosystems across Africa — collecting,
+          UMURINZI CTI continuously monitors infostealer ecosystems across Africa — collecting,
           analyzing, and alerting on stolen credentials and session data before attackers can
           weaponize them against your organization.
         </motion.p>
